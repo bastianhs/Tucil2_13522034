@@ -1,8 +1,8 @@
 import numpy as np
 
 
-# Finding points in bezier curve
-def find_points(
+# Finding points in quadratic bezier curve with divide and conquer
+def find_quad_bezier_dnc(
         control_points: np.ndarray[np.ndarray[float]], 
         i: int, 
         num_of_iter: int
@@ -17,9 +17,8 @@ def find_points(
 
     if i == num_of_iter:
         return np.array((p0, r, p2))
-    
     control_points1: np.ndarray[np.ndarray[float]] = np.array((p0, q0, r))
     control_points2: np.ndarray[np.ndarray[float]] = np.array((r, q1, p2))
-    bezier1: np.ndarray[np.ndarray[float]] = find_points(control_points1, i + 1, num_of_iter)
-    bezier2: np.ndarray[np.ndarray[float]] = find_points(control_points2, i + 1, num_of_iter)
+    bezier1: np.ndarray[np.ndarray[float]] = find_quad_bezier_dnc(control_points1, i + 1, num_of_iter)
+    bezier2: np.ndarray[np.ndarray[float]] = find_quad_bezier_dnc(control_points2, i + 1, num_of_iter)
     return np.concatenate((bezier1, bezier2))
