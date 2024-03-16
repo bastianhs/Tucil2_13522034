@@ -106,6 +106,7 @@ def plot_bezier_dnc_iteration(
     ys_bezier_split = np.split(ys_bezier, 2 ** (nth_iteration - 1))
     
     colors: list[str] = ["red", "orange", "green", "blue", "purple"]
+    plt.title(f"Bezier Curve\nIteration {nth_iteration}")
     for i in range(len(xs_bezier_split)):
         xs: np.ndarray[float] = np.array((
             xs_bezier_split[i][0], 
@@ -121,7 +122,7 @@ def plot_bezier_dnc_iteration(
         plt.plot(xs, ys, color=colors[nth_iteration % len(colors)])
 
 
-def animate_bezier_dnc(
+def visualize_bezier_dnc(
         input_points: np.ndarray[np.ndarray[float]],
         bezier: np.ndarray[np.ndarray[float]],
         num_of_iterations: int
