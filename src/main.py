@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-from bezier import find_bezier_dnc
+from bezier import find_bezier_dnc, animate_bezier_dnc
 
 
 # receive input from user
@@ -38,8 +38,8 @@ while True:
 # input iteration
 while True:
     try:
-        iteration: int = int(input("Enter iteration: "))
-        if iteration > 0:
+        num_of_iterations: int = int(input("Enter number of iteration: "))
+        if num_of_iterations > 0:
             print()
             break
         print("Iteration must be greater than 0.\n")
@@ -49,26 +49,12 @@ while True:
 
 
 # find points in bezier curve
-
 start: float = time.time()
-
-bezier: np.ndarray[np.ndarray[float]] = find_bezier_dnc(input_points, 1, iteration)
-
+bezier: np.ndarray[np.ndarray[float]] = find_bezier_dnc(input_points, 1, num_of_iterations)
 end: float = time.time()
 print(f"Execution time: {(end - start) * 1000} ms\n")
 
 
-# test plotting points and line
-
-input_xs, input_ys = input_points.transpose()
-bezier_xs, bezier_ys = bezier.transpose()
-
-fig, ax = plt.subplots()
-
-ax.scatter(input_xs, input_ys)
-ax.plot(input_xs, input_ys)
-
-ax.scatter(bezier_xs, bezier_ys)
-ax.plot(bezier_xs, bezier_ys)
-
+# plotting bezier curve result with animation
+animate_bezier_dnc(input_points, bezier, num_of_iterations)
 plt.show()
