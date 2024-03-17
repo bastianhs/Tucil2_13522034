@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import time
 import os
 from BezierDnC import find_quad_bezier_dnc, find_bezier_dnc, visualize_bezier_dnc
+from BezierBF import find_quad_bezier_bf, visualize_bezier_bf
 
 
 # receive input from user
@@ -91,8 +92,8 @@ while num_of_points == 3:
 # input iteration
 while True:
     try:
-        num_of_iterations: int = int(input("Enter number of iteration: "))
-        if num_of_iterations > 0:
+        num_of_iteration: int = int(input("Enter number of iteration: "))
+        if num_of_iteration > 0:
             print()
             break
         print("Iteration must be greater than 0.\n")
@@ -115,12 +116,11 @@ start: float = time.time()
 
 bezier: np.ndarray[np.ndarray[float]]
 if num_of_points != 3:
-    bezier = find_bezier_dnc(input_points, 1, num_of_iterations)
+    bezier = find_bezier_dnc(input_points, 1, num_of_iteration)
 elif algorithm in ["1", "divide and conquer"]:
-    bezier = find_quad_bezier_dnc(input_points, 1, num_of_iterations)
+    bezier = find_quad_bezier_dnc(input_points, 1, num_of_iteration)
 else:
-    # put brute force algorithm here
-    pass
+    bezier = find_quad_bezier_bf(input_points, num_of_iteration)
 
 end: float = time.time()
 print(f"Execution time: {(end - start) * 1000} ms\n")
@@ -129,25 +129,25 @@ print(f"Execution time: {(end - start) * 1000} ms\n")
 # plotting bezier curve result
 if (visualize == "yes"):
     if algorithm in ["1", "divide and conquer"]:
-        visualize_bezier_dnc(input_points, bezier, num_of_iterations)
+        visualize_bezier_dnc(input_points, bezier, num_of_iteration)
     else:
-        # visualize brute force here
-        pass
+        visualize_bezier_bf(input_points, bezier)
 else:
     if algorithm in ["1", "divide and conquer"]:
-        xs_input: np.ndarray[float]
-        ys_input: np.ndarray[float]
-        xs_input, ys_input = input_points.transpose()
-        plt.scatter(xs_input, ys_input)
-        plt.plot(xs_input, ys_input)
-        
-        xs_bezier: np.ndarray[float]
-        ys_bezier: np.ndarray[float]
-        xs_bezier, ys_bezier = bezier.transpose()
-        plt.scatter(xs_bezier, ys_bezier)
-        plt.plot(xs_bezier, ys_bezier)
+        plt.title(f"Bezier Curve with Divide and Conquer")
     else:
-        # plot brute force end result here
-        pass
+        plt.title(f"Bezier Curve with Brute Force")
+    
+    xs_input: np.ndarray[float]
+    ys_input: np.ndarray[float]
+    xs_input, ys_input = input_points.transpose()
+    plt.scatter(xs_input, ys_input)
+    plt.plot(xs_input, ys_input)
+    
+    xs_bezier: np.ndarray[float]
+    ys_bezier: np.ndarray[float]
+    xs_bezier, ys_bezier = bezier.transpose()
+    plt.scatter(xs_bezier, ys_bezier)
+    plt.plot(xs_bezier, ys_bezier)
 
 plt.show()

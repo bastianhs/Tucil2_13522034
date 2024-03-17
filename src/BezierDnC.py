@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def find_quad_bezier_dnc(
         control_points: np.ndarray[np.ndarray[float]], 
         i: int, 
-        num_of_iterations: int
+        num_of_iteration: int
         ) -> np.ndarray[np.ndarray[float]]:
     
     p0: np.ndarray[float] = control_points[0]
@@ -17,7 +17,7 @@ def find_quad_bezier_dnc(
     r: np.ndarray[float] = (q0 + q1) / 2
 
     # base case when we reach end of iteration
-    if i == num_of_iterations:
+    if i == num_of_iteration:
         return np.array((p0, r, p2))
     
     # find 1st half control points
@@ -27,8 +27,8 @@ def find_quad_bezier_dnc(
     control_points2: np.ndarray[np.ndarray[float]] = np.array((r, q1, p2))
     
     # find bezier curve points from the 1st half and 2nd half
-    bezier1: np.ndarray[np.ndarray[float]] = find_quad_bezier_dnc(control_points1, i + 1, num_of_iterations)
-    bezier2: np.ndarray[np.ndarray[float]] = find_quad_bezier_dnc(control_points2, i + 1, num_of_iterations)
+    bezier1: np.ndarray[np.ndarray[float]] = find_quad_bezier_dnc(control_points1, i + 1, num_of_iteration)
+    bezier2: np.ndarray[np.ndarray[float]] = find_quad_bezier_dnc(control_points2, i + 1, num_of_iteration)
 
     # combine both result
     return np.concatenate((bezier1, bezier2))
@@ -56,13 +56,13 @@ def find_midpoints(
 def find_bezier_dnc(
         control_points: np.ndarray[np.ndarray[float]], 
         i: int, 
-        num_of_iterations: int
+        num_of_iteration: int
         ) -> np.ndarray[np.ndarray[float]]:
 
     mid_points: np.ndarray[np.ndarray[float]] = find_midpoints(control_points)
     
     # base case when we reach end of iteration
-    if i == num_of_iterations:
+    if i == num_of_iteration:
         return np.array((control_points[0], mid_points[-1], control_points[-1]))
     
     # find 1st half control points
@@ -87,13 +87,14 @@ def find_bezier_dnc(
     control_points2 = np.append(control_points2, np.array([control_points[-1]]), axis=0)
     
     # find bezier curve points from the 1st half and 2nd half
-    bezier1: np.ndarray[np.ndarray[float]] = find_bezier_dnc(control_points1, i + 1, num_of_iterations)
-    bezier2: np.ndarray[np.ndarray[float]] = find_bezier_dnc(control_points2, i + 1, num_of_iterations)
+    bezier1: np.ndarray[np.ndarray[float]] = find_bezier_dnc(control_points1, i + 1, num_of_iteration)
+    bezier2: np.ndarray[np.ndarray[float]] = find_bezier_dnc(control_points2, i + 1, num_of_iteration)
 
     # combine both result
     return np.concatenate((bezier1, bezier2))
 
 
+# plot bezier curve with divide and conquer for each iteration
 def plot_bezier_dnc_iteration(
         xs_bezier: np.ndarray[float],
         ys_bezier: np.ndarray[float],
@@ -106,7 +107,7 @@ def plot_bezier_dnc_iteration(
     ys_bezier_split = np.split(ys_bezier, 2 ** (nth_iteration - 1))
     
     colors: list[str] = ["red", "orange", "green", "blue", "purple"]
-    plt.title(f"Bezier Curve\nIteration {nth_iteration}")
+    plt.title(f"Bezier Curve with Divide and Conquer\nIteration {nth_iteration}")
     for i in range(len(xs_bezier_split)):
         xs: np.ndarray[float] = np.array((
             xs_bezier_split[i][0], 
@@ -122,10 +123,11 @@ def plot_bezier_dnc_iteration(
         plt.plot(xs, ys, color=colors[nth_iteration % len(colors)])
 
 
+# visualize bezier curve with divide and conquer for all iteration
 def visualize_bezier_dnc(
         input_points: np.ndarray[np.ndarray[float]],
         bezier: np.ndarray[np.ndarray[float]],
-        num_of_iterations: int
+        num_of_iteration: int
         ) -> None:
     
     xs_input: np.ndarray[float]
@@ -136,7 +138,7 @@ def visualize_bezier_dnc(
     ys_bezier: np.ndarray[float]
     xs_bezier, ys_bezier = bezier.transpose()
     
-    for i in range(num_of_iterations):
+    for i in range(num_of_iteration):
         plt.clf()
         
         plt.scatter(xs_input, ys_input)
