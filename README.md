@@ -28,7 +28,70 @@ The program will most likely still run properly if a newer version is already in
 
 ## How to run
 
-## Input format
+1. Clone this repository
+
+   ```
+   https://github.com/bastianhs/Tucil2_13522034.git
+   ```
+
+2. Change directory to the main directory
+
+   ```
+   cd Tucil2_13522034
+   ```
+
+3. Run main.py
+
+   ```
+   python src/main.py
+   ```
+
+   or
+
+   ```
+   python3 src/main.py
+   ```
+
+## Input points format
+
+You can input points from terminal or .txt file.  
+You need **at least 2 points** to construct a bezier curve.  
+Point format:
+
+```
+x_coordinate, y_coordinate
+```
+
+For example:
+
+```
+3, 7
+4.5, 8.0
+2, 2.3
+-0.5, -11
+```
+
+## Iteration
+
+You can input the number of iterations when the terminal ask you to do so.
+
+Iteration will determine how smooth the result.  
+More iterations will produce smoother graph.  
+But, it will take more time to get the result.
+
+The number of iterations in divide and conquer will not produce the same result as in brute force.  
+To achieve the same result, use the following equation:
+
+$iteration_{bf} = 2^{iteration_{dnc}} + 1$
+
+$iteration_{bf}$ is the number of iterations when using brute force  
+$iteration_{dnc}$ is the number of iterations when using divide and conquer
+
+So, if you use 5 iterations for divide and conquer, you will need 33 iterations for brute force to achieve the same result.
+
+## Visualization
+
+Visualization with more than 10 iterations for divide and conquer could potentially make the program lag.
 
 ## Creator
 

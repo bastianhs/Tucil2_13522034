@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # find points in quadratic bezier curve with brute force
 def find_quad_bezier_bf(
         control_points: np.ndarray[np.ndarray[float]],
-        num_of_iteration: int
+        num_of_iterations: int
         ) -> np.ndarray[np.ndarray[float]]:
     
     p0: np.ndarray[float] = control_points[0]
@@ -15,7 +15,7 @@ def find_quad_bezier_bf(
     # find points in bezier curve
     bezier_points: np.ndarray[np.ndarray[float]] = np.empty((0, 2), dtype=np.float32)
     t: float
-    for t in np.linspace(0, 1, num_of_iteration):
+    for t in np.linspace(0, 1, num_of_iterations):
         bezier_point: np.ndarray[float] = (1 - t)**2 * p0 + 2 * (1 - t) * t * p1 + t**2 * p2
         bezier_points = np.append(bezier_points, np.array([bezier_point]), axis=0)
     
