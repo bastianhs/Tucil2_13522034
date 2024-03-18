@@ -55,6 +55,7 @@ The program will most likely still run properly if a newer version is already in
 ## Input points format
 
 You can input points from terminal or .txt file.  
+The .txt file must be placed in the test folder.  
 You need **at least 2 points** to construct a bezier curve.  
 Point format:
 
