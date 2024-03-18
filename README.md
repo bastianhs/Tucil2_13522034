@@ -31,7 +31,7 @@ The program will most likely still run properly if a newer version is already in
 1. Clone this repository
 
    ```
-   https://github.com/bastianhs/Tucil2_13522034.git
+   git clone https://github.com/bastianhs/Tucil2_13522034.git
    ```
 
 2. Change directory to the main directory
